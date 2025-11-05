@@ -12,26 +12,18 @@ import usersRouter from "./routes/user.routes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-global.__rootdir = __dirname;
-
 const app = express();
 
-// default middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-// serve static html/css/js from /public
 app.use(express.static("public"));
 
-// API Routes
 app.use("/api/posts", postsRouter);
 app.use("/api/todos", todosRouter);
 app.use("/api/users", usersRouter);
 
-// serverless export (vercel)
 export const handler = serverless(app);
 
-// local mode
 if (!process.env.VERCEL) {
   const PORT = process.env.PORT || 4000;
   app.listen(PORT, () => console.log(`LOCAL: http://localhost:${PORT}`));
