@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Arya Fake API</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  :root{--bg:#111;--fg:#fff;--box:#1c1c1c;}
+  body{margin:0;font-family:system-ui;background:var(--bg);color:var(--fg);}
+  header{padding:20px;text-align:center;border-bottom:1px solid #222;}
+  h1{margin:0;font-size:28px;font-weight:700;}
+  main{max-width:900px;margin:auto;padding:24px;}
+  ul{padding-left:18px;}
+  code{background:#222;padding:4px 8px;border-radius:6px;color:#0f0;}
+  button{margin-top:20px;background:#0b5;color:#fff;padding:12px 18px;border:none;border-radius:6px;font-size:16px;cursor:pointer;}
+  button:hover{background:#0d7;}
+  .res-box{margin-top:22px;background:var(--box);padding:18px;border-radius:8px;font-size:14px;overflow-x:auto;}
+  details summary{
+    cursor:pointer;
+    background:#333;
+    padding:4px 6px;
+    border-radius:4px;
+    margin:2px 0;
+  }
+  details{
+    background:#222;
+    border-radius:4px;
+    margin:4px 0;
+    padding:4px;
+  }
+  @media(max-width:600px){
+    main{padding:16px;}
+    h1{font-size:24px;}
+    button{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Arya Fake API</h1>
+</header>
+
+<main>
+  <h2>Available endpoints:</h2>
+  <ul>
+    <li><code>/api/posts</code></li>
+    <br/>
+    <li><code>/api/todos</code></li>
+    <br/>
+    <li><code>/api/users</code></li>
+  </ul>
+
+  <button id="testBtn">Test GET /api/posts?limit=5</button>
+  <h3>Response</h3>
+  <div class="res-box" id="out"></div>
+</main>
+
+<script>
+function renderObject(obj) {
+  if (typeof obj !== "object" || obj === null) return String(obj);
+
+  let html = "<div style='padding-left:14px'>";
+  for (const key in obj) {
+    const val = obj[key];
+    if (typeof val === "object" && val !== null) {
+      html += `
+        <details>
+          <summary><b>${key}</b></summary>
+          ${renderObject(val)}
+        </details>
+      `;
+    } else {
+      html += `<div><b>${key}:</b> ${val}</div>`;
+    }
+  }
+  html += "</div>";
+  return html;
+}
+
+document.getElementById("testBtn").onclick = async () => {
+  const out = document.getElementById("out");
+  out.innerHTML = "loading...";
+  const res = await fetch("/api/posts?limit=5");
+  const json = await res.json();
+  out.innerHTML = renderObject(json);
+};
+</script>
+
+</body>
+</html>
