@@ -86,7 +86,7 @@ A lightweight mock REST API built on **Express** using **local JSON files**.
 | -------- | --------------- | -------------------------------------------- |
 | Posts    | `/api/posts`    | `/api/posts/:id`                             |
 | Todos    | `/api/todos`    | `/api/todos/:id`                             |
-| Profiles | `/api/profiles` | `/api/profiles/:id` or `/api/profiles/:uuid` |
+| Users | `/api/users` | `/api/users/:uuid` |
 
 ---
 

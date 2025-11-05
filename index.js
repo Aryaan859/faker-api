@@ -19,7 +19,7 @@ import todosRouter from "./routes/todo.routes.js";
 app.use("/api/todos", todosRouter);
 // users
 import usersRouter from "./routes/user.routes.js";
-app.use("/api/profiles", usersRouter);
+app.use("/api/users", usersRouter);
 
 
 // server running 
